@@ -11,18 +11,12 @@ CREATE TABLE ItemCategories (
     CategoryName VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Items (
+CREATE TABLE BaseItems (
     ItemID INT AUTO_INCREMENT PRIMARY KEY,
     ItemName VARCHAR(255) NOT NULL,
-    CategoryID INT,
-    FOREIGN KEY (CategoryID) REFERENCES ItemCategories(CategoryID)
-);
-
-CREATE TABLE BaseItems (
-    BaseItemID INT AUTO_INCREMENT PRIMARY KEY,
-    ItemID INT,
-    Quantity INT,
-    FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+    Description TEXT,
+    Category VARCHAR(50),
+    Quantity INT NOT NULL
 );
 
 CREATE TABLE Rescuers (
@@ -42,17 +36,19 @@ CREATE TABLE Announcements (
 
 CREATE TABLE RescuerCargo (
     RescuerID INT,
+    CargoID INT,
     ItemID INT,
-    Quantity INT,
-    PRIMARY KEY (RescuerID, ItemID),
+    Quantity INT NOT NULL,
     FOREIGN KEY (RescuerID) REFERENCES Rescuers(RescuerID),
-    FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+    FOREIGN KEY (ItemID) REFERENCES BaseItems(ItemID)
 );
 
 CREATE TABLE MapMarkers (
     MarkerID INT AUTO_INCREMENT PRIMARY KEY,
-    MarkerType VARCHAR(50) NOT NULL, 
-    MarkerData VARCHAR(1000) NOT NULL 
+    MarkerType VARCHAR(50) NOT NULL,
+    Latitude DECIMAL(10, 8) NOT NULL,
+    Longitude DECIMAL(11, 8) NOT NULL,
+    AdditionalInfo TEXT
 );
 
 CREATE TABLE MapFilters (
